@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class CountryReader {
     private final static List<Countries> countriesList = new ArrayList<>();
+
     private String pathfile;
 
     public static List<Countries> getCountriesList() {
@@ -25,7 +27,9 @@ public class CountryReader {
 
     public static List<Countries> ReadFromFile(String pathfile) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(pathfile));
-        String line = bufferedReader.readLine();
+        //String line = bufferedReader.readLine();
+        String line;
+
         while ((line = bufferedReader.readLine()) != null) {
             countriesList.add(CountriesFromLine(line));
         }
@@ -35,15 +39,18 @@ public class CountryReader {
 
     private static Countries CountriesFromLine(String line) {
         String[] token = line.split(Pattern.quote("|"));
-        //verific daca ultimul caracter din line este |
-        if (line.endsWith("|")) {
+        if (isaBoolean(line)) {
             return new Countries(IdGenerate(), token[0], token[1], Double.parseDouble(token[2]), Double.parseDouble(token[3]),
                     token[4], null);
 
         }
-
         return new Countries(IdGenerate(), token[0], token[1], Double.parseDouble(token[2]), Double.parseDouble(token[3]),
                 token[4], Neiborough(token[5]));
+    }
+
+    //verific daca ultimul caracter din line este |
+    private static boolean isaBoolean(String line) {
+        return line.endsWith("|");
     }
 
     private static List<String> Neiborough(String s) {
@@ -53,9 +60,12 @@ public class CountryReader {
     }
 
     private static int IdGenerate() {
-        if (countriesList == null) {
-            return 0;
-        }
         return countriesList.size() + 1;
     }
+
+//    Stream<Countries> stream = countriesList.stream();
+//    static List<String> allCountriesName = countriesList.stream()
+//            .map(Countries::getName)
+//            .toList();
+//
 }

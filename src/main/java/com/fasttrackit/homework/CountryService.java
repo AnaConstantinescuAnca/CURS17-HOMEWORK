@@ -1,28 +1,41 @@
 package com.fasttrackit.homework;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class CountryService {
+    private static String pathFile; //= "files/Countries2.txt";
+    private static List<Countries> countriesList;
+    //- list all country names :  -> returns a list of strings
+       static List<String> allCountriesName = getList().stream()
+            .map(Countries::getName)
+            .toList();
+    //- get capital of a country :  -> returns a string
+    static List<String> allCountriesCapital = getList().stream()
+            .map(Countries::getCapital)
+            .toList();
 
-    private static final List<Countries> countries = new ArrayList<>();
+    //- get population of a country : -> returns a long
+    static List<Double> allCountriesPopulation = getList().stream()
+            .map(Countries::getPopulation)
+            .toList();
+
+    //- get countries in continent : -> returns list of Country objects
+    static List<Countries> getCountriesInContinent = getList().stream()
+            .filter(countries -> countries.getContinent().equals("Asia") )
+            .toList();
+
+    //- get country neighbours :  -> returns list of Strings
+    static List<List<String>> getCountriesNeighbours = getList().stream()
+            .map(Countries::getNeighbour)
+            .toList();
 
 
     public CountryService() {
     }
 
-    public List<Countries> getCountries() {
-        return countries;
+    public static List<Countries> getList() {
+        //CountryReader.getCountriesList();
+        return countriesList = CountryReader.getCountriesList();
     }
-
-    public static List<String> getAllCountriesNames() {
-
-        return countries.stream()
-                .map(countries -> countries.getName())
-                .toList();
-    }
-
-
 
 }

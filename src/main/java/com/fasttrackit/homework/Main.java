@@ -1,27 +1,32 @@
 package com.fasttrackit.homework;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 public class Main {
     private static String pathFile = "files/Countries2.txt";
-    private static List<Countries> list = new ArrayList<>();
-
 
     public static void main(String[] args) throws IOException {
-       List<Countries> list = CountryReader.ReadFromFile(pathFile);
-        System.out.println(list.toString());
+        List<Countries> list = CountryReader.ReadFromFile(pathFile);
 
-        //afisez numele tuturor tarilor
-        CountryService countryService = new CountryService();
-        list.stream().map(Countries::getName);
-        list.stream().toList();
-     System.out.println(list.stream().toList());
-        }
+        //list all countries:  -> returns a list of country objects
+        System.out.println(CountryService.getList());
 
+        //- list all country names :  -> returns a list of strings
+        System.out.println(CountryService.allCountriesName);
 
+        //- get capital of a country :  -> returns a string
+        System.out.println(CountryService.allCountriesCapital);
 
+        //- get population of a country : -> returns a long
+        System.out.println(CountryService.allCountriesPopulation);
 
+        //- get countries in continent : -> returns list of Country objects
+        System.out.println(CountryService.getCountriesInContinent);
+
+        //- get country neighbours :  -> returns list of Strings
+        System.out.println(CountryService.getCountriesNeighbours);
+
+    }
 }
